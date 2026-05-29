@@ -1,0 +1,1513 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>♥ canción no enviada ♥ ::: my site :::</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<style>
+  /* canción no enviada */
+
+  :root {
+    --hotpink: #ff3399;
+    --hotpink-2: #ff66bb;
+    --cyan: #00ccff;
+    --cyan-2: #66e0ff;
+    --lime: #ccff33;
+    --violet: #9933ff;
+    --silver-1: #f7f7ff;
+    --silver-2: #c8c8de;
+    --silver-3: #8a8aa8;
+    --silver-4: #4a4a66;
+    --ink: #1a0033;
+    --paper: #fff0fa;
+    --mono: "VT323", "Courier New", ui-monospace, monospace;
+    --y2k: Tahoma, Verdana, Geneva, sans-serif;
+    --display: "Comic Sans MS", "Trebuchet MS", Tahoma, sans-serif;
+    --serif: "Times New Roman", Times, serif;
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    color: var(--silver-1);
+    font-family: var(--y2k);
+    font-size: 13px;
+    line-height: 1.45;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body {
+    min-height: 100vh;
+    /* purple cosmic gradient + tiled stars */
+    background:
+      url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><g fill='%23ffffff' opacity='0.55'><circle cx='10' cy='15' r='1'/><circle cx='80' cy='30' r='0.7'/><circle cx='40' cy='70' r='1.2'/><circle cx='100' cy='90' r='0.9'/><circle cx='60' cy='100' r='0.6'/><circle cx='20' cy='50' r='0.8'/><polygon points='90,55 91,58 94,58 91.5,60 92.5,63 90,61 87.5,63 88.5,60 86,58 89,58' fill='%23ffccff'/><polygon points='30,20 31,22 33,22 31.5,23.5 32,25.5 30,24.5 28,25.5 28.5,23.5 27,22 29,22' fill='%2300ccff'/></g></svg>"),
+      radial-gradient(ellipse at top, #4a1a8a 0%, #2a0a55 45%, #14002a 100%);
+    background-attachment: fixed;
+  }
+
+  /* sparkle layer */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    background-image:
+      url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='280' height='280'><g fill='%23ffffff' opacity='0.9'><polygon points='40,10 42,18 50,20 42,22 40,30 38,22 30,20 38,18'/><polygon points='200,80 202,86 208,88 202,90 200,96 198,90 192,88 198,86' fill='%23ffccee'/><polygon points='130,180 132,186 138,188 132,190 130,196 128,190 122,188 128,186' fill='%2300ccff'/><polygon points='250,240 251,244 255,245 251,246 250,250 249,246 245,245 249,244' fill='%23ccff33'/></g></svg>");
+    opacity: 0.7;
+    animation: twinkle 4s steps(2) infinite;
+  }
+  @keyframes twinkle {
+    0%, 100% { opacity: 0.7; }
+    50% { opacity: 0.35; }
+  }
+
+  /* marquee superior */
+  .top-bar {
+    position: relative;
+    z-index: 2;
+    background: linear-gradient(180deg, #000 0%, #220044 100%);
+    border-bottom: 2px ridge var(--hotpink);
+    padding: 6px 0;
+    font-family: var(--y2k);
+    font-size: 12px;
+    overflow: hidden;
+    color: var(--cyan-2);
+    letter-spacing: 0.02em;
+    text-shadow: 0 0 6px var(--cyan);
+  }
+  .marquee-track {
+    display: inline-block;
+    white-space: nowrap;
+    animation: marquee 28s linear infinite;
+    padding-left: 100%;
+  }
+  .marquee-track .pink { color: var(--hotpink-2); text-shadow: 0 0 6px var(--hotpink); }
+  .marquee-track .lime { color: var(--lime); text-shadow: 0 0 6px var(--lime); }
+  .marquee-track .blink { animation: blink 0.9s steps(2) infinite; }
+  @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+  @keyframes blink { 50% { opacity: 0; } }
+
+  main {
+    position: relative;
+    z-index: 1;
+    max-width: 880px;
+    margin: 28px auto;
+    padding: 0 16px 280px;
+  }
+
+  /* ventana estilo win98 */
+  .window {
+    background: linear-gradient(180deg, #fff 0%, #d4d4e8 50%, #b6b6d0 100%);
+    border: 2px outset var(--silver-1);
+    box-shadow:
+      0 0 0 1px #000,
+      4px 4px 0 0 rgba(0,0,0,0.5),
+      0 0 30px rgba(255, 51, 153, 0.4);
+    color: var(--ink);
+    margin-bottom: 24px;
+  }
+  .window-titlebar {
+    background: linear-gradient(180deg, var(--hotpink) 0%, var(--violet) 50%, #4a0066 100%);
+    color: #fff;
+    font-family: var(--y2k);
+    font-weight: bold;
+    font-size: 12px;
+    padding: 4px 8px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    text-shadow: 1px 1px 0 rgba(0,0,0,0.5);
+    border-bottom: 1px solid #000;
+  }
+  .window-titlebar .dots {
+    display: inline-flex;
+    gap: 3px;
+    margin-right: 8px;
+  }
+  .window-titlebar .dots span {
+    width: 12px; height: 12px;
+    background: linear-gradient(180deg, #fff, var(--silver-2));
+    border: 1px solid #000;
+    display: inline-block;
+    font-size: 9px;
+    text-align: center;
+    line-height: 10px;
+    color: #000;
+    font-family: var(--y2k);
+  }
+  .window-body {
+    padding: 20px 24px 22px;
+  }
+  @media (max-width: 600px) {
+    .window-body { padding: 16px; }
+  }
+
+  /* encabezado principal */
+  .masthead {
+    text-align: center;
+    padding: 12px 0 4px;
+  }
+  .welcome {
+    font-family: var(--display);
+    font-size: 16px;
+    color: var(--hotpink);
+    margin-bottom: 4px;
+    text-shadow: 1px 1px 0 #fff, 2px 2px 0 rgba(0,0,0,0.2);
+  }
+  .welcome .star { color: var(--lime); -webkit-text-stroke: 0.5px #000; }
+  h1.title {
+    font-family: var(--serif);
+    font-style: italic;
+    font-weight: 900;
+    font-size: clamp(48px, 11vw, 110px);
+    line-height: 0.95;
+    letter-spacing: -0.01em;
+    margin: 4px 0 8px;
+    /* chrome y2k effect */
+    background: linear-gradient(180deg,
+      #fff 0%,
+      #ffccee 20%,
+      var(--hotpink) 45%,
+      var(--violet) 60%,
+      #fff 80%,
+      var(--cyan) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-shadow:
+      3px 3px 0 rgba(255, 51, 153, 0.35),
+      6px 6px 0 rgba(0, 0, 0, 0.2);
+    filter: drop-shadow(0 0 8px rgba(255, 102, 187, 0.6));
+  }
+  h1.title .no {
+    display: inline-block;
+    transform: rotate(-6deg);
+    background: linear-gradient(180deg, var(--lime), #66ff00);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-stroke: 2px #000;
+  }
+  .subtitle {
+    font-family: var(--display);
+    font-size: 15px;
+    color: var(--violet);
+    margin: 6px auto 6px;
+    max-width: 48ch;
+    line-height: 1.5;
+    text-wrap: balance;
+  }
+  .subtitle .heart { color: var(--hotpink); }
+
+  .marquee-mini {
+    margin: 14px auto 4px;
+    max-width: 580px;
+    background: #000;
+    border: 2px inset var(--silver-2);
+    overflow: hidden;
+    padding: 4px 0;
+    font-family: var(--mono);
+    font-size: 18px;
+    color: var(--lime);
+  }
+  .marquee-mini .marquee-track {
+    animation-duration: 22s;
+  }
+
+  /* botones de entrada */
+  .doors {
+    margin-top: 22px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+  }
+  @media (max-width: 720px) {
+    .doors { grid-template-columns: 1fr; }
+  }
+
+  .door {
+    position: relative;
+    text-align: left;
+    cursor: pointer;
+    font: inherit;
+    padding: 0;
+    border: none;
+    background: none;
+    color: inherit;
+  }
+  .door-inner {
+    background: linear-gradient(180deg, #fff 0%, #ffe6f4 60%, #ffccdd 100%);
+    border: 3px outset #fff;
+    box-shadow:
+      0 0 0 1px #000,
+      4px 4px 0 0 rgba(0,0,0,0.4),
+      inset 0 0 0 1px rgba(255, 102, 187, 0.4);
+    padding: 16px 16px 38px;
+    color: var(--ink);
+    transition: transform 80ms;
+  }
+  .door:nth-child(2) .door-inner {
+    background: linear-gradient(180deg, #fff 0%, #e6f9ff 60%, #ccf0ff 100%);
+    box-shadow:
+      0 0 0 1px #000,
+      4px 4px 0 0 rgba(0,0,0,0.4),
+      inset 0 0 0 1px rgba(0, 204, 255, 0.4);
+  }
+  .door:hover .door-inner { transform: translate(-2px, -2px); box-shadow: 0 0 0 1px #000, 6px 6px 0 0 rgba(0,0,0,0.5), inset 0 0 0 1px rgba(255, 102, 187, 0.4); }
+  .door:active .door-inner { border-style: inset; transform: translate(2px, 2px); box-shadow: 0 0 0 1px #000, 2px 2px 0 0 rgba(0,0,0,0.4); }
+  .door:focus-visible .door-inner { outline: 3px dashed var(--lime); outline-offset: 2px; }
+
+  .door .num {
+    font-family: var(--mono);
+    font-size: 16px;
+    color: var(--violet);
+    letter-spacing: 0.04em;
+    background: linear-gradient(180deg, #fff, var(--silver-2));
+    border: 1px solid #000;
+    padding: 1px 8px;
+    display: inline-block;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+  }
+  .door h2 {
+    font-family: var(--display);
+    font-weight: bold;
+    font-size: 22px;
+    line-height: 1.15;
+    margin: 4px 0 8px;
+    color: var(--hotpink);
+    text-shadow: 1px 1px 0 #fff, 2px 2px 0 rgba(0,0,0,0.18);
+  }
+  .door:nth-child(2) h2 {
+    color: #007ab8;
+    text-shadow: 1px 1px 0 #fff, 2px 2px 0 rgba(0,0,0,0.18);
+  }
+  .door p {
+    font-family: var(--y2k);
+    font-size: 12px;
+    color: #4a3366;
+    margin: 0;
+    line-height: 1.5;
+    max-width: 36ch;
+  }
+  .door .arrow {
+    position: absolute;
+    bottom: 10px;
+    right: 14px;
+    font-family: var(--mono);
+    font-size: 18px;
+    color: var(--ink);
+    background: linear-gradient(180deg, var(--lime) 0%, #99cc00 100%);
+    border: 2px outset #fff;
+    padding: 2px 10px;
+    box-shadow: 1px 1px 0 #000;
+  }
+  .door:hover .arrow { background: linear-gradient(180deg, #ffff66 0%, #ccaa00 100%); }
+  .door:nth-child(2) .arrow {
+    background: linear-gradient(180deg, var(--cyan) 0%, #0099cc 100%);
+    color: #fff;
+    text-shadow: 1px 1px 0 #000;
+  }
+
+  /* paneles desplegables */
+  .panel {
+    display: none;
+    animation: rise 220ms ease-out;
+  }
+  .panel.open { display: block; }
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .panel-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+    gap: 16px;
+  }
+  .panel-head h3 {
+    font-family: var(--display);
+    font-weight: bold;
+    font-size: 26px;
+    margin: 0;
+    color: var(--hotpink);
+    text-shadow: 1px 1px 0 #fff, 2px 2px 0 rgba(0,0,0,0.2);
+  }
+  .panel#panel-search .panel-head h3 { color: #007ab8; }
+
+  .close-btn {
+    font-family: var(--y2k);
+    font-weight: bold;
+    font-size: 11px;
+    background: linear-gradient(180deg, #fff, var(--silver-2));
+    color: #000;
+    border: 2px outset #fff;
+    cursor: pointer;
+    padding: 4px 10px;
+    box-shadow: 1px 1px 0 #000;
+  }
+  .close-btn:active { border-style: inset; }
+
+  /* form */
+  .field { margin-bottom: 14px; }
+  .field label {
+    display: block;
+    font-family: var(--y2k);
+    font-weight: bold;
+    font-size: 12px;
+    color: var(--violet);
+    margin-bottom: 4px;
+    letter-spacing: 0.02em;
+  }
+  .field label .optional {
+    color: var(--silver-3);
+    font-weight: normal;
+    font-style: italic;
+    margin-left: 6px;
+  }
+  .field input,
+  .field textarea {
+    width: 100%;
+    background: #fff;
+    border: 2px inset var(--silver-2);
+    padding: 6px 8px;
+    font-family: var(--y2k);
+    font-size: 14px;
+    color: var(--ink);
+    line-height: 1.4;
+    box-shadow: inset 1px 1px 0 #000, inset -1px -1px 0 #fff;
+  }
+  .field input:focus,
+  .field textarea:focus {
+    outline: 2px dashed var(--hotpink);
+    outline-offset: 2px;
+    background: #fffbe6;
+  }
+  .field input::placeholder,
+  .field textarea::placeholder {
+    color: var(--silver-3);
+    font-style: italic;
+  }
+  .field .hint {
+    margin-top: 4px;
+    font-family: var(--y2k);
+    font-size: 11px;
+    color: var(--silver-4);
+  }
+  .field .hint.error {
+    color: #cc0033;
+    background: #ffe6ee;
+    border: 1px solid #cc0033;
+    padding: 2px 6px;
+  }
+  .field .hint.ok {
+    color: #006600;
+    background: #e6ffe6;
+    border: 1px solid #006600;
+    padding: 2px 6px;
+  }
+
+  .submit-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    margin-top: 10px;
+    flex-wrap: wrap;
+    padding-top: 12px;
+    border-top: 1px dashed var(--silver-3);
+  }
+  .privacy-note {
+    font-family: var(--y2k);
+    font-size: 11px;
+    color: var(--silver-4);
+    max-width: 38ch;
+    line-height: 1.4;
+    margin: 0;
+  }
+  .privacy-note .heart { color: var(--hotpink); }
+  .btn {
+    font-family: var(--display);
+    font-weight: bold;
+    font-size: 15px;
+    background: linear-gradient(180deg, var(--hotpink-2) 0%, var(--hotpink) 50%, #cc0066 100%);
+    color: #fff;
+    border: 3px outset var(--hotpink-2);
+    padding: 8px 22px;
+    cursor: pointer;
+    text-shadow: 1px 1px 0 rgba(0,0,0,0.5);
+    box-shadow: 2px 2px 0 #000, inset 0 0 12px rgba(255,255,255,0.4);
+    transition: filter 80ms;
+  }
+  .btn:hover { filter: brightness(1.1); }
+  .btn:active { border-style: inset; transform: translate(1px, 1px); box-shadow: 1px 1px 0 #000; }
+  .btn[disabled] {
+    background: var(--silver-3);
+    border-color: var(--silver-3);
+    cursor: not-allowed;
+  }
+
+  /* search results */
+  .search-meta {
+    font-family: var(--mono);
+    font-size: 17px;
+    color: var(--violet);
+    background: linear-gradient(180deg, #fff, #f0eafa);
+    border: 2px inset var(--silver-2);
+    padding: 4px 10px;
+    margin: 6px 0 16px;
+    line-height: 1.2;
+  }
+  .results {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .result {
+    padding: 12px 14px;
+    background: linear-gradient(180deg, #fff 0%, #fff0f9 100%);
+    border: 2px outset #fff;
+    box-shadow: 2px 2px 0 rgba(0,0,0,0.25), inset 0 0 0 1px rgba(255, 102, 187, 0.3);
+  }
+  .result:nth-child(even) {
+    background: linear-gradient(180deg, #fff 0%, #eaf6ff 100%);
+    box-shadow: 2px 2px 0 rgba(0,0,0,0.25), inset 0 0 0 1px rgba(0, 204, 255, 0.3);
+  }
+  .result-head {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    margin-bottom: 8px;
+    flex-wrap: wrap;
+    color: var(--ink);
+  }
+  .result-from {
+    font-family: var(--y2k);
+    font-size: 13px;
+    color: #4a3366;
+  }
+  .result-from b {
+    font-family: var(--y2k);
+    font-weight: bold;
+    color: var(--hotpink);
+  }
+  .result-from .to {
+    font-family: var(--display);
+    font-weight: bold;
+    color: var(--violet);
+  }
+  .result-date {
+    font-family: var(--mono);
+    font-size: 14px;
+    color: var(--silver-4);
+    margin-left: auto;
+    background: #fff;
+    border: 1px solid var(--silver-2);
+    padding: 1px 6px;
+  }
+  .song-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 10px;
+    background: linear-gradient(180deg, #fff 0%, var(--silver-2) 100%);
+    border: 2px outset #fff;
+    text-decoration: none;
+    color: var(--ink);
+    font-family: var(--y2k);
+    font-size: 12px;
+    box-shadow: 1px 1px 0 #000;
+    max-width: 100%;
+  }
+  .song-link:hover {
+    background: linear-gradient(180deg, #ffe6f4 0%, #ffccdd 100%);
+  }
+  .song-link:active { border-style: inset; }
+
+  .platform-pill {
+    font-family: var(--y2k);
+    font-weight: bold;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    padding: 2px 6px;
+    background: linear-gradient(180deg, var(--hotpink-2), var(--hotpink));
+    color: #fff;
+    text-shadow: 1px 1px 0 rgba(0,0,0,0.5);
+    border: 1px solid #000;
+  }
+  .song-url {
+    color: #004488;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 30ch;
+    text-decoration: underline;
+  }
+  .play-glyph {
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 5px 0 5px 8px;
+    border-color: transparent transparent transparent var(--hotpink);
+  }
+
+  .empty-state {
+    padding: 18px;
+    font-family: var(--display);
+    font-size: 16px;
+    color: var(--violet);
+    line-height: 1.4;
+    text-align: center;
+    background: linear-gradient(180deg, #fff, #f6efff);
+    border: 2px dashed var(--hotpink);
+  }
+  .empty-state .small {
+    display: block;
+    margin-top: 8px;
+    font-family: var(--y2k);
+    font-size: 11px;
+    color: var(--silver-4);
+  }
+
+  /* toast */
+  .toast {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    background: linear-gradient(180deg, var(--hotpink-2), var(--hotpink) 60%, #aa0055);
+    color: #fff;
+    padding: 10px 18px;
+    font-family: var(--display);
+    font-weight: bold;
+    font-size: 14px;
+    border: 3px outset var(--hotpink-2);
+    box-shadow: 3px 3px 0 #000;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 220ms, transform 220ms;
+    z-index: 50;
+    max-width: 90vw;
+    text-align: center;
+    text-shadow: 1px 1px 0 rgba(0,0,0,0.5);
+  }
+  .toast.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+
+  /* nombres recientes */
+  .ticker {
+    margin-top: 22px;
+    padding: 10px 14px;
+    background: linear-gradient(180deg, #fff, #f0eafa);
+    border: 2px inset var(--silver-2);
+    font-family: var(--display);
+    font-size: 14px;
+    color: var(--ink);
+    line-height: 1.5;
+  }
+  .ticker .label {
+    display: block;
+    font-family: var(--y2k);
+    font-weight: bold;
+    font-size: 11px;
+    letter-spacing: 0.04em;
+    color: var(--violet);
+    margin-bottom: 6px;
+    text-transform: uppercase;
+  }
+  .ticker .name {
+    color: var(--hotpink);
+    font-weight: bold;
+  }
+  .ticker .sep {
+    color: var(--lime);
+    margin: 0 4px;
+    -webkit-text-stroke: 0.5px #000;
+  }
+
+  /* contador de canciones */
+  .footer-window .window-titlebar {
+    background: linear-gradient(180deg, var(--cyan) 0%, #0066aa 50%, #002255 100%);
+  }
+  .counter-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+  }
+  .hit-counter {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--y2k);
+    font-size: 12px;
+    color: var(--ink);
+  }
+  .hit-counter .digits {
+    display: inline-flex;
+    gap: 2px;
+    background: #000;
+    border: 2px inset var(--silver-3);
+    padding: 2px 3px;
+  }
+  .hit-counter .digit {
+    font-family: var(--mono);
+    font-size: 22px;
+    line-height: 1;
+    color: var(--lime);
+    background: #001100;
+    padding: 0 4px;
+    min-width: 16px;
+    text-align: center;
+    text-shadow: 0 0 6px var(--lime);
+  }
+  .footer-links {
+    font-family: var(--y2k);
+    font-size: 11px;
+    color: var(--silver-4);
+  }
+  .footer-links a {
+    color: var(--hotpink);
+    text-decoration: underline;
+    cursor: pointer;
+  }
+  .footer-links a:hover { color: #cc0033; }
+  .credit-link {
+    color: var(--hotpink);
+    font-weight: bold;
+    text-decoration: underline;
+    text-shadow: 1px 1px 0 #fff;
+  }
+  .credit-link:hover { color: var(--violet); }
+  .disclaimer {
+    margin-top: 10px;
+    font-family: var(--y2k);
+    font-size: 10px;
+    color: var(--silver-4);
+    text-align: center;
+    border-top: 1px dashed var(--silver-2);
+    padding-top: 6px;
+  }
+  .disclaimer .star { color: var(--hotpink); }
+
+  /* spinning gif placeholders (CSS) */
+  .spinner {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    background: conic-gradient(var(--hotpink), var(--cyan), var(--lime), var(--violet), var(--hotpink));
+    border-radius: 50%;
+    border: 1px solid #000;
+    vertical-align: -3px;
+    animation: spin 2.5s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .construction {
+    margin: 16px auto 0;
+    font-family: var(--y2k);
+    font-weight: bold;
+    font-size: 11px;
+    color: #ffcc00;
+    background: repeating-linear-gradient(45deg, #000 0 10px, #ffcc00 10px 20px);
+    color: #fff;
+    -webkit-text-stroke: 0.5px #000;
+    padding: 4px 12px;
+    display: inline-block;
+    border: 2px outset #ffcc00;
+  }
+
+  /* radio flotante */
+  .radio-window {
+    position: fixed;
+    right: 18px;
+    bottom: 18px;
+    width: 340px;
+    max-width: calc(100vw - 24px);
+    margin: 0;
+    z-index: 60;
+    box-shadow:
+      0 0 0 1px #000,
+      4px 4px 0 0 rgba(0,0,0,0.55),
+      0 0 30px rgba(204, 255, 51, 0.35);
+  }
+  .radio-titlebar {
+    background: linear-gradient(180deg, #00aa66 0%, #006633 50%, #003322 100%) !important;
+    cursor: default;
+  }
+  .radio-body {
+    padding: 10px 12px 12px !important;
+    background: linear-gradient(180deg, #2a2a3a 0%, #14141e 100%);
+    color: var(--lime);
+  }
+  .radio-display {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 6px 10px;
+    background: #001100;
+    border: 2px inset var(--silver-3);
+    margin-bottom: 8px;
+    overflow: hidden;
+  }
+  .radio-meta {
+    flex: 1;
+    min-width: 0;
+    font-family: var(--mono);
+    line-height: 1;
+  }
+  .radio-line {
+    font-size: 20px;
+    color: var(--lime);
+    text-shadow: 0 0 6px var(--lime);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .radio-line b {
+    color: #fff;
+    font-weight: normal;
+    text-shadow: 0 0 6px var(--hotpink-2);
+  }
+  .radio-sub {
+    font-size: 13px;
+    color: var(--cyan);
+    margin-top: 2px;
+    text-transform: lowercase;
+    text-shadow: 0 0 4px var(--cyan);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .radio-embed {
+    background: #000;
+    border: 2px inset var(--silver-3);
+    margin-bottom: 8px;
+    min-height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .radio-embed iframe {
+    display: block;
+    border: 0;
+    width: 100%;
+  }
+  .radio-embed .empty {
+    font-family: var(--mono);
+    font-size: 16px;
+    color: var(--silver-3);
+    padding: 18px 10px;
+    text-align: center;
+  }
+  .radio-controls {
+    display: flex;
+    gap: 6px;
+  }
+  .radio-btn {
+    flex: 1;
+    font-family: var(--y2k);
+    font-weight: bold;
+    font-size: 11px;
+    color: #000;
+    background: linear-gradient(180deg, #fff 0%, var(--silver-2) 100%);
+    border: 2px outset #fff;
+    padding: 5px 4px;
+    cursor: pointer;
+    box-shadow: 1px 1px 0 #000;
+    text-transform: lowercase;
+    letter-spacing: 0.02em;
+  }
+  .radio-btn:hover { background: linear-gradient(180deg, #ffe6f4, #ffccdd); }
+  .radio-btn:active { border-style: inset; transform: translate(1px,1px); box-shadow: none; }
+  .radio-btn.primary {
+    background: linear-gradient(180deg, var(--lime) 0%, #99cc00 100%);
+    color: #001100;
+  }
+  .radio-btn.primary:hover { background: linear-gradient(180deg, #eaff66, #aacc22); }
+  .radio-titlebar .close-btn {
+    background: none !important;
+    border: 1px solid #fff !important;
+    color: #fff !important;
+    padding: 0 6px !important;
+    font-size: 11px !important;
+    box-shadow: none !important;
+    cursor: pointer;
+  }
+
+  .radio-toggle {
+    position: fixed;
+    right: 18px;
+    bottom: 18px;
+    z-index: 60;
+    font-family: var(--display);
+    font-weight: bold;
+    font-size: 13px;
+    color: #001100;
+    background: linear-gradient(180deg, var(--lime) 0%, #99cc00 100%);
+    border: 3px outset var(--lime);
+    padding: 8px 14px;
+    cursor: pointer;
+    box-shadow: 2px 2px 0 #000;
+    text-shadow: 1px 1px 0 rgba(255,255,255,0.4);
+  }
+  .radio-toggle:hover { filter: brightness(1.1); }
+  .radio-toggle:active { border-style: inset; transform: translate(1px,1px); box-shadow: 1px 1px 0 #000; }
+
+  @media (max-width: 600px) {
+    .radio-window { right: 8px; left: 8px; bottom: 8px; width: auto; }
+    .radio-toggle { right: 8px; bottom: 8px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="top-bar">
+  <div class="marquee-track" id="top-marquee">
+    <span class="pink">♥</span> deja de forma anónima tu canción <span class="lime">★</span> nadie sabrá que fuiste tú <span class="pink">♡</span>
+  </div>
+</div>
+
+<main>
+
+  <!-- MASTHEAD WINDOW -->
+  <div class="window">
+    <div class="window-titlebar">
+      <span><span class="dots"><span>_</span><span>□</span><span>x</span></span> ♥ cancion_no_enviada.html ♥</span>
+    </div>
+    <div class="window-body">
+      <header class="masthead">
+        <div class="welcome">
+          <span class="star">✿</span> welcome to my site <span class="star">✿</span>
+        </div>
+        <h1 class="title">canción <span class="no">no</span> enviada</h1>
+        <p class="subtitle">aquí puedes dejar la canción que nunca le pudiste dedicar a alguien <span class="heart">♥</span> o buscar tu nombre y ver si alguien te dejó una.</p>
+
+        <div class="marquee-mini">
+          <div class="marquee-track">
+            ♥ &nbsp; deja de forma anónima tu canción &nbsp; ★ &nbsp; nadie sabrá que fuiste tú &nbsp; ✿ &nbsp;
+            ♥ &nbsp; deja de forma anónima tu canción &nbsp; ★ &nbsp; nadie sabrá que fuiste tú &nbsp; ✿ &nbsp;
+          </div>
+        </div>
+
+      </header>
+    </div>
+  </div>
+
+  <!-- DOORS -->
+  <section class="doors" aria-label="elige una opción">
+    <button class="door" data-open="dedicate" aria-label="dejar una canción dedicada">
+      <div class="door-inner">
+        <div class="num">★ opción 01 ★</div>
+        <h2>♥ deja una canción ♥<br/>a nombre de alguien</h2>
+        <p>elige un nombre y pega el link de spotify, youtube, bandcamp, soundcloud o apple music. listo, ya está dicho.</p>
+        <span class="arrow">click aquí »</span>
+      </div>
+    </button>
+
+    <button class="door" data-open="search" aria-label="buscar canciones dedicadas a mí">
+      <div class="door-inner">
+        <div class="num">✿ opción 02 ✿</div>
+        <h2>★ busca tu nombre ★<br/>quizás te dejaron algo</h2>
+        <p>escribe tu nombre (o el de quien quieras) y mira si alguien dejó una canción a tu nombre.</p>
+        <span class="arrow">click aquí »</span>
+      </div>
+    </button>
+  </section>
+
+  <!-- DEDICATE WINDOW -->
+  <section class="window panel" id="panel-dedicate" aria-labelledby="dedicate-title" style="margin-top: 24px;">
+    <div class="window-titlebar">
+      <span><span class="dots"><span>_</span><span>□</span><span>x</span></span> ♥ dejar_cancion.exe</span>
+      <button class="close-btn" data-close style="background:none;border:1px solid #fff;color:#fff;padding:0 6px;font-size:11px;box-shadow:none;">×</button>
+    </div>
+    <div class="window-body">
+      <div class="panel-head">
+        <h3 id="dedicate-title">♥ deja tu canción ♥</h3>
+        <button class="close-btn" data-close>cerrar [x]</button>
+      </div>
+
+      <form id="dedicate-form" autocomplete="off" novalidate>
+        <div class="field">
+          <label for="d-to">★ ¿para quién es?</label>
+          <input id="d-to" name="to" type="text" placeholder="escribe el nombre de esa persona…" required maxlength="80"/>
+        </div>
+
+        <div class="field">
+          <label for="d-link">♬ link de la canción</label>
+          <input id="d-link" name="link" type="url" placeholder="pega el link de spotify, youtube, bandcamp…" required/>
+          <div class="hint" id="d-link-hint">spotify · youtube · bandcamp · soundcloud · apple music · tidal</div>
+        </div>
+
+        <div class="submit-row">
+          <p class="privacy-note"><span class="heart">♥</span> anónimx · todos pueden verla.</p>
+          <button class="btn" type="submit" id="d-submit">» dejar la canción «</button>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <!-- SEARCH WINDOW -->
+  <section class="window panel" id="panel-search" aria-labelledby="search-title" style="margin-top: 24px;">
+    <div class="window-titlebar">
+      <span><span class="dots"><span>_</span><span>□</span><span>x</span></span> ✿ buscar_nombre.exe</span>
+      <button class="close-btn" data-close style="background:none;border:1px solid #fff;color:#fff;padding:0 6px;font-size:11px;box-shadow:none;">×</button>
+    </div>
+    <div class="window-body">
+      <div class="panel-head">
+        <h3 id="search-title">★ busca tu nombre ★</h3>
+        <button class="close-btn" data-close>cerrar [x]</button>
+      </div>
+
+      <div class="field" style="margin-bottom: 6px;">
+        <label for="s-input">♡ ¿cómo te llaman?</label>
+        <input id="s-input" type="text" placeholder="escribe un nombre…" autocomplete="off" maxlength="80"/>
+      </div>
+
+      <div class="search-meta" id="s-meta">&gt; empieza a escribir para ver si alguien te dejó algo_</div>
+
+      <ul class="results" id="s-results"></ul>
+    </div>
+  </section>
+
+  <!-- FOOTER WINDOW -->
+  <div class="window footer-window" style="margin-top: 24px;">
+    <div class="window-titlebar">
+      <span><span class="dots"><span>_</span><span>□</span><span>x</span></span> ★ counter.cgi</span>
+    </div>
+    <div class="window-body" style="padding: 14px 18px;">
+      <div class="counter-row" style="justify-content: center;">
+        <div class="hit-counter">
+          <span class="spinner"></span>
+          <span>canciones dejadas:</span>
+          <span class="digits" id="hit-counter">
+            <span class="digit">0</span><span class="digit">0</span><span class="digit">0</span><span class="digit">0</span>
+          </span>
+        </div>
+      </div>
+      <div class="disclaimer">
+        <span class="star">✧</span> desarrollado por <a href="https://mariapaulajg.com" target="_blank" rel="noopener noreferrer" class="credit-link">María Paula</a> <span class="star">✧</span>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<!-- FLOATING RADIO PLAYER -->
+<div class="window radio-window" id="radio-window" hidden>
+  <div class="window-titlebar radio-titlebar">
+    <span><span class="dots"><span>_</span><span>□</span><span>x</span></span> ♬ radio.exe — buzón en vivo</span>
+    <button class="close-btn" id="radio-close" aria-label="apagar radio">apagar [x]</button>
+  </div>
+  <div class="window-body radio-body">
+    <div class="radio-display">
+      <span class="spinner" aria-hidden="true"></span>
+      <div class="radio-meta">
+        <div class="radio-line">♬ para <b id="radio-to">—</b></div>
+        <div class="radio-sub" id="radio-sub">cargando…</div>
+      </div>
+    </div>
+    <div class="radio-embed" id="radio-embed">
+      <div class="empty">♬ el buzón aún está vacío</div>
+    </div>
+    <div class="radio-controls">
+      <button class="radio-btn" id="radio-prev" aria-label="anterior">« anterior</button>
+      <button class="radio-btn" id="radio-shuffle" aria-label="aleatorio">~ mezclar</button>
+      <button class="radio-btn primary" id="radio-next" aria-label="siguiente">siguiente »</button>
+    </div>
+  </div>
+</div>
+
+<button class="radio-toggle" id="radio-toggle" hidden>♬ encender radio</button>
+
+<script>
+/*
+  SQL para correr una sola vez en el editor de Supabase:
+
+  create table songs (
+    id         uuid         default gen_random_uuid() primary key,
+    "to"       text         not null,
+    link       text         not null,
+    created_at timestamptz  default now()
+  );
+
+  alter table songs enable row level security;
+
+  create policy "public read"
+    on songs for select using (true);
+
+  create policy "public insert"
+    on songs for insert with check (
+      length("to") between 1 and 80 and
+      length(link) between 1 and 2000 and
+      link ~* '^https?://'
+    );
+*/
+
+(() => {
+  // config supabase
+  const SUPABASE_URL  = 'https://mbjgbmaztfahedfcnsqr.supabase.co/rest/v1/';
+  const SUPABASE_ANON = 'sb_publishable_CvA2Hov1QpQMRUBIGpNqRA_jINNO97o';
+
+  const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
+  const configured = !SUPABASE_URL.includes('YOUR_PROJECT');
+
+  // utilidades
+  const norm = (s) => (s || "")
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[̀-ͯ]/g, "")
+    .trim();
+
+  const escapeHtml = (s) => String(s).replace(/[&<>"']/g, c =>
+    ({ "&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;" })[c]);
+
+  const prettyUrl = (url) => {
+    try {
+      const u = new URL(url);
+      return u.hostname.replace(/^www\./, "") + u.pathname.replace(/\/$/, "");
+    } catch { return url; }
+  };
+
+  const fmtDate = (val) => {
+    const d = new Date(val);
+    const diff = (Date.now() - d.getTime()) / 1000;
+    if (diff < 60) return "hace un instante";
+    if (diff < 3600) return "hace " + Math.floor(diff/60) + " min";
+    if (diff < 86400) return "hace " + Math.floor(diff/3600) + " h";
+    if (diff < 86400*7) return "hace " + Math.floor(diff/86400) + " d";
+    return d.toLocaleDateString("es", { day: "numeric", month: "short", year: "numeric" });
+  };
+
+  const detectPlatform = (url) => {
+    try {
+      const h = new URL(url).hostname.replace(/^www\./, "");
+      if (h.includes("spotify.com") || h.includes("spotify.link")) return "Spotify";
+      if (h.includes("youtube.com") || h.includes("youtu.be"))      return "YouTube";
+      if (h.includes("bandcamp.com"))                                return "Bandcamp";
+      if (h.includes("soundcloud.com"))                              return "SoundCloud";
+      if (h.includes("music.apple.com"))                             return "Apple Music";
+      if (h.includes("tidal.com"))                                   return "Tidal";
+      if (h.includes("deezer.com"))                                  return "Deezer";
+      if (h.includes("audiomack.com"))                               return "Audiomack";
+      return null;
+    } catch { return null; }
+  };
+
+  const toEmbed = (url) => {
+    try {
+      const u = new URL(url);
+      const h = u.hostname.replace(/^www\./, "");
+      if (h === "youtu.be") {
+        const id = u.pathname.replace(/^\//, "").split("/")[0];
+        return id ? { kind: "YouTube", id, platform: "youtube", height: 195 } : null;
+      }
+      if (h.includes("youtube.com")) {
+        let id = u.searchParams.get("v");
+        if (!id && u.pathname.startsWith("/embed/"))  id = u.pathname.split("/")[2];
+        if (!id && u.pathname.startsWith("/shorts/")) id = u.pathname.split("/")[2];
+        return id ? { kind: "YouTube", id, platform: "youtube", height: 195 } : null;
+      }
+      if (h.includes("spotify.com")) {
+        const parts = u.pathname.split("/").filter(Boolean);
+        const idx = parts.findIndex(p => ["track","album","playlist","episode","show","artist"].includes(p));
+        if (idx >= 0 && parts[idx+1])
+          return { kind: "Spotify", platform: "spotify",
+            src: "https://open.spotify.com/embed/" + parts[idx] + "/" + parts[idx+1], height: 80 };
+      }
+      if (h.includes("soundcloud.com"))
+        return { kind: "SoundCloud", platform: "soundcloud", url, height: 120 };
+      if (h.includes("music.apple.com"))
+        return { kind: "Apple Music", platform: "apple",
+          src: url.replace("music.apple.com", "embed.music.apple.com"), height: 175 };
+      return null;
+    } catch { return null; }
+  };
+
+  const embedSrc = (embed, autoplay) => {
+    if (embed.platform === "youtube") {
+      const p = new URLSearchParams({ autoplay: autoplay ? "1" : "0",
+        playsinline: "1", rel: "0", modestbranding: "1" });
+      if (autoplay && !userInteracted) p.set("mute", "1");
+      return "https://www.youtube.com/embed/" + embed.id + "?" + p.toString();
+    }
+    if (embed.platform === "soundcloud")
+      return "https://w.soundcloud.com/player/?url=" + encodeURIComponent(embed.url) +
+        "&color=%23ff3399&auto_play=" + (autoplay ? "true" : "false") +
+        "&hide_related=true&show_comments=false&show_user=true&show_reposts=false&visual=false";
+    return embed.src;
+  };
+
+  // llamadas a la base de datos
+  const apiInsertSong = async (to, link) => {
+    const { data, error } = await sb.from("songs")
+      .insert({ to, link })
+      .select().single();
+    if (error) throw error;
+    return data;
+  };
+
+  const apiSearchSongs = async (query) => {
+    const { data, error } = await sb.from("songs")
+      .select("*")
+      .ilike("to", "%" + query.trim() + "%")
+      .order("created_at", { ascending: false });
+    if (error) throw error;
+    return data || [];
+  };
+
+  const apiCountSongs = async () => {
+    const { count, error } = await sb.from("songs")
+      .select("*", { count: "exact", head: true });
+    return error ? 0 : (count || 0);
+  };
+
+  const apiFetchRecentNames = async () => {
+    const { data, error } = await sb.from("songs")
+      .select("to")
+      .order("created_at", { ascending: false })
+      .limit(50);
+    if (error || !data) return [];
+    const seen = new Set(), names = [];
+    for (const row of data) {
+      const k = norm(row.to);
+      if (!seen.has(k)) { seen.add(k); names.push(row.to); }
+      if (names.length >= 8) break;
+    }
+    return names;
+  };
+
+  const apiFetchEmbeddable = async () => {
+    const { data, error } = await sb.from("songs")
+      .select("*")
+      .order("created_at", { ascending: false })
+      .limit(100);
+    if (error || !data) return [];
+    return data.filter(e => toEmbed(e.link));
+  };
+
+  // abrir/cerrar paneles
+  const panels = {
+    dedicate: document.getElementById("panel-dedicate"),
+    search:   document.getElementById("panel-search")
+  };
+  const openPanel = (name) => {
+    Object.entries(panels).forEach(([k, el]) => el.classList.toggle("open", k === name));
+    panels[name].scrollIntoView({ behavior: "smooth", block: "start" });
+    if (name === "dedicate") setTimeout(() => document.getElementById("d-to").focus(), 320);
+    if (name === "search")   setTimeout(() => document.getElementById("s-input").focus(), 320);
+  };
+  const closePanels = () => Object.values(panels).forEach(el => el.classList.remove("open"));
+
+  document.querySelectorAll("[data-open]").forEach(b =>
+    b.addEventListener("click", () => openPanel(b.dataset.open)));
+  document.querySelectorAll("[data-close]").forEach(b =>
+    b.addEventListener("click", closePanels));
+
+  // notificación flotante
+  const toastEl = document.getElementById("toast");
+  let toastTimer = null;
+  const toast = (msg) => {
+    toastEl.textContent = msg;
+    toastEl.classList.add("show");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => toastEl.classList.remove("show"), 3200);
+  };
+
+  // formulario para dejar una canción
+  const dForm  = document.getElementById("dedicate-form");
+  const dTo    = document.getElementById("d-to");
+  const dLink  = document.getElementById("d-link");
+  const dHint  = document.getElementById("d-link-hint");
+  const dBtn   = document.getElementById("d-submit");
+
+  const validateLink = () => {
+    const v = dLink.value.trim();
+    if (!v) { dHint.textContent = "spotify · youtube · bandcamp · soundcloud · apple music · tidal"; dHint.className = "hint"; return null; }
+    try {
+      const url = new URL(v);
+      if (!/^https?:$/.test(url.protocol)) throw 0;
+      const p = detectPlatform(v);
+      dHint.textContent = p ? "★ detectamos: " + p + " ✓" : "plataforma no reconocida, pero el link parece válido.";
+      dHint.className = "hint ok";
+      return v;
+    } catch {
+      dHint.textContent = "✗ ese link no parece válido. tiene que empezar con http o https.";
+      dHint.className = "hint error";
+      return null;
+    }
+  };
+  dLink.addEventListener("input", validateLink);
+  dLink.addEventListener("blur", validateLink);
+
+  dForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    if (!configured) { toast("✗ configura Supabase primero."); return; }
+    const to   = dTo.value.trim();
+    const link = validateLink();
+    if (!to)   { dTo.focus();   toast("¿para quién es?"); return; }
+    if (!link) { dLink.focus(); return; }
+
+    dBtn.disabled = true;
+    dBtn.textContent = "enviando…";
+    try {
+      const row = await apiInsertSong(to, link);
+      dForm.reset();
+      dHint.textContent = "spotify · youtube · bandcamp · soundcloud · apple music · tidal";
+      dHint.className = "hint";
+      toast("♥ la dejaste a nombre de " + to + " ♥");
+      closePanels();
+      // actualizar contador, marquee y radio sin recargar
+      refreshCounter();
+      buildTopMarquee();
+      const embed = toEmbed(row.link);
+      if (embed) {
+        const platform = toEmbed(row.link).platform;
+        if (platform === "youtube" || platform === "soundcloud")
+          radioQueue.unshift(row);
+        else
+          radioQueue.push(row);
+        if (!radioState.closed) renderRadio(false);
+      }
+    } catch (err) {
+      toast("✗ error al guardar. intenta de nuevo.");
+      console.error(err);
+    } finally {
+      dBtn.disabled = false;
+      dBtn.textContent = "» dejar la canción «";
+    }
+  });
+
+  // buscador
+  const sInput   = document.getElementById("s-input");
+  const sMeta    = document.getElementById("s-meta");
+  const sResults = document.getElementById("s-results");
+
+  const renderResultList = (q, matches) => {
+    sResults.innerHTML = "";
+    if (!matches.length) {
+      sMeta.textContent = "> nada todavía a nombre de “" + q.trim() + "”_";
+      const li = document.createElement("li");
+      li.className = "empty-state";
+      li.innerHTML = "♡ todavía no te escribieron ♡";
+      sResults.appendChild(li);
+      return;
+    }
+    sMeta.textContent = "> " + matches.length + " " +
+      (matches.length === 1 ? "canción" : "canciones") +
+      " a nombre de “" + q.trim() + "”_";
+    matches.forEach(e => sResults.appendChild(buildResultEl(e)));
+  };
+
+  const buildResultEl = (e) => {
+    const li = document.createElement("li");
+    li.className = "result";
+    const head = document.createElement("div");
+    head.className = "result-head";
+    const fromEl = document.createElement("div");
+    fromEl.className = "result-from";
+    fromEl.innerHTML = "♬ para <span class=\"to\">" + escapeHtml(e.to) + "</span>";
+    const dateEl = document.createElement("div");
+    dateEl.className = "result-date";
+    dateEl.textContent = fmtDate(e.created_at);
+    head.appendChild(fromEl);
+    head.appendChild(dateEl);
+    li.appendChild(head);
+    const a = document.createElement("a");
+    a.className = "song-link";
+    a.href = e.link;
+    a.target = "_blank";
+    a.rel = "noopener noreferrer";
+    const platform = detectPlatform(e.link);
+    a.innerHTML =
+      "<span class=\"play-glyph\" aria-hidden=\"true\"></span>" +
+      (platform ? "<span class=\"platform-pill\">" + platform + "</span>" : "") +
+      "<span class=\"song-url\">" + escapeHtml(prettyUrl(e.link)) + "</span>";
+    li.appendChild(a);
+    return li;
+  };
+
+  let searchTimer = null;
+  sInput.addEventListener("input", (ev) => {
+    clearTimeout(searchTimer);
+    const q = ev.target.value;
+    if (!q.trim()) {
+      sMeta.textContent = "> empieza a escribir para ver si alguien te dejó algo_";
+      sResults.innerHTML = "";
+      return;
+    }
+    if (!configured) { sMeta.textContent = "> configura Supabase primero_"; return; }
+    sMeta.textContent = "> buscando…_";
+    searchTimer = setTimeout(async () => {
+      try {
+        const matches = await apiSearchSongs(q);
+        renderResultList(q, matches);
+      } catch { sMeta.textContent = "> error al buscar_"; }
+    }, 300);
+  });
+
+  // contador
+  const counterEl = document.getElementById("hit-counter");
+  const refreshCounter = async () => {
+    const n = configured ? await apiCountSongs() : 0;
+    const padded = String(n).padStart(4, "0").slice(-4);
+    counterEl.innerHTML = padded.split("").map(d =>
+      "<span class=\"digit\">" + d + "</span>").join("");
+  };
+
+  // marquee superior con nombres reales
+  const promo = '<span class="pink">♥</span> deja de forma anónima tu canción <span class="lime">★</span> nadie sabrá que fuiste tú <span class="pink">♡</span>';
+
+  const buildTopMarquee = async () => {
+    const el = document.getElementById("top-marquee");
+    if (!el) return;
+    const names = configured ? await apiFetchRecentNames() : [];
+    const songBits = names.map((n, i) => {
+      const heart = i % 2 === 0 ? "♥" : "♡";
+      const color = i % 2 === 0 ? "pink" : "lime";
+      return '<span class="' + color + '">♬</span> una canción para <b>' +
+        escapeHtml(n) + '</b> <span class="' + color + '">' + heart + '</span>';
+    });
+    const woven = [];
+    let i = 0;
+    while (songBits.length && woven.join(" ").length < 600) {
+      woven.push(promo);
+      woven.push(songBits[i % songBits.length]);
+      if (songBits.length > 1 && songBits[(i+1) % songBits.length])
+        woven.push(songBits[(i+1) % songBits.length]);
+      i += 2;
+      if (i > songBits.length * 2) break;
+    }
+    if (!woven.length) woven.push(promo, promo, promo, promo);
+    else woven.push(promo);
+    el.innerHTML = woven.join(" &nbsp; · &nbsp; ");
+  };
+
+  // radio
+  const RADIO_STATE_KEY = "cancion_no_enviada__radio_v1";
+  let radioState = (() => {
+    try { return JSON.parse(localStorage.getItem(RADIO_STATE_KEY)) || {}; }
+    catch { return {}; }
+  })();
+  const saveRadioState = () =>
+    localStorage.setItem(RADIO_STATE_KEY, JSON.stringify(radioState));
+
+  const radioWindow = document.getElementById("radio-window");
+  const radioToggle = document.getElementById("radio-toggle");
+  const radioEmbed  = document.getElementById("radio-embed");
+  const radioTo     = document.getElementById("radio-to");
+  const radioSub    = document.getElementById("radio-sub");
+
+  let radioQueue = [], radioIdx = 0, userInteracted = false;
+
+  const markInteracted = () => {
+    if (userInteracted) return;
+    userInteracted = true;
+    if (!radioState.closed) renderRadio(true);
+  };
+  ["pointerdown", "keydown", "touchstart"].forEach(ev =>
+    window.addEventListener(ev, markInteracted, { once: true, capture: true, passive: true }));
+
+  const shuffleArr = (a) => {
+    for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  };
+
+  const buildRadioQueue = (songs) => {
+    const autoplayable = shuffleArr(songs.filter(e => {
+      const p = toEmbed(e.link); return p && (p.platform === "youtube" || p.platform === "soundcloud");
+    }));
+    const others = shuffleArr(songs.filter(e => {
+      const p = toEmbed(e.link); return p && p.platform !== "youtube" && p.platform !== "soundcloud";
+    }));
+    radioQueue = autoplayable.concat(others);
+    radioIdx = 0;
+  };
+
+  const renderRadio = (autoplay) => {
+    if (autoplay === undefined) autoplay = true;
+    if (!radioQueue.length) {
+      radioTo.textContent = "—";
+      radioSub.textContent = "el buzón aún está vacío";
+      radioEmbed.innerHTML = '<div class="empty">♬ todavía no hay canciones reproducibles</div>';
+      return;
+    }
+    const e = radioQueue[radioIdx % radioQueue.length];
+    const embed = toEmbed(e.link);
+    radioTo.textContent = e.to;
+    const supportsAutoplay = embed.platform === "youtube" || embed.platform === "soundcloud";
+    const tail = !supportsAutoplay
+      ? " · toca ▶ para sonar"
+      : (!userInteracted ? " · toca aquí para sonar" : "");
+    radioSub.textContent = embed.kind.toLowerCase() + " · " +
+      (radioIdx + 1) + "/" + radioQueue.length + tail;
+    const src = embedSrc(embed, autoplay);
+    radioEmbed.innerHTML =
+      '<iframe src="' + src + '" height="' + embed.height + '" ' +
+      'frameborder="0" allow="autoplay; encrypted-media; clipboard-write; picture-in-picture" ' +
+      'allowfullscreen loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>';
+  };
+
+  const setRadioOpen = (open) => {
+    radioState.closed = !open;
+    saveRadioState();
+    radioWindow.hidden = !open;
+    radioToggle.hidden = open;
+    if (!open) radioEmbed.innerHTML = '<div class="empty">apagada</div>';
+    else renderRadio();
+  };
+
+  document.getElementById("radio-close").addEventListener("click", () => setRadioOpen(false));
+  radioToggle.addEventListener("click", () => setRadioOpen(true));
+  document.getElementById("radio-next").addEventListener("click", () => {
+    if (!radioQueue.length) return;
+    radioIdx = (radioIdx + 1) % radioQueue.length; renderRadio();
+  });
+  document.getElementById("radio-prev").addEventListener("click", () => {
+    if (!radioQueue.length) return;
+    radioIdx = (radioIdx - 1 + radioQueue.length) % radioQueue.length; renderRadio();
+  });
+  document.getElementById("radio-shuffle").addEventListener("click", () => {
+    shuffleArr(radioQueue); radioIdx = 0; renderRadio();
+  });
+
+  document.addEventListener("keydown", (e) => { if (e.key === "Escape") closePanels(); });
+
+  // arranque
+  (async () => {
+    await Promise.all([
+      refreshCounter(),
+      buildTopMarquee(),
+      (async () => {
+        const songs = configured ? await apiFetchEmbeddable() : [];
+        buildRadioQueue(songs);
+        setRadioOpen(!radioState.closed);
+      })()
+    ]);
+  })();
+})();
+</script>
+
+</body>
+</html>
